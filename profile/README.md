@@ -1,40 +1,33 @@
-# 🌱 AgroWeb - Plataforma de Productos Agropecuarios
 
-## 📋 Descripción del Proyecto
 
-**AgroWeb** es una plataforma web completa para la gestión y comercialización de productos agropecuarios colombianos, desarrollada con arquitectura de microservicios moderna y tecnologías escalables.
+# 🌱 AgroWeb - Plataforma Integral de Productos Agropecuarios
 
-### 🎯 Objetivo Principal
-Facilitar la conexión entre productores agrícolas y consumidores finales mediante una plataforma digital robusta, segura y fácil de usar.
+**AgroWeb** es una plataforma web moderna para la gestión, comercialización y análisis de productos agropecuarios colombianos, basada en microservicios y tecnologías escalables.
 
-## 🏗️ Arquitectura del Sistema
+---
+
+## 📁 Estructura General del Workspace
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    🌐 Frontend (React)                      │
-│                 http://localhost:5173                      │
-└─────────────────────┬───────────────────────────────────────┘
-                      │
-          ┌───────────┴───────────┐
-          │                       │
-     ┌────▼────┐             ┌────▼────┐
-     │🥕 API   │             │👥 API   │
-     │Productos│             │Usuarios │
-     │:5000    │             │:5001    │
-     └────┬────┘             └────┬────┘
-          │                       │
-     ┌────▼────┐             ┌────▼────┐
-     │Cassandra│             │ Pandas  │
-     │ Docker  │             │DataFrame│
-     │ :9042   │             │(Memory) │
-     └─────────┘             └─────────┘
+Proyecto/
+├── .github/                # Configuración y perfil de GitHub
+│   └── profile/            # README de presentación del proyecto
+├── FrontEnd/               # Aplicación web React + TypeScript
+├── IntegrationTests/       # Suite de pruebas de integración multi-servicio
+├── Rulesets/               # Reglas de ramas y flujos de trabajo
+├── Serv_GestionCarrito/    # Microservicio de gestión de carritos de compra
+├── Serv_GestionEstadisticas/ # Microservicio de estadísticas y métricas
+├── Serv_GestionProductos/  # Microservicio de productos agrícolas
+├── Serv_Usuarios/          # Microservicio de usuarios y autenticación
 ```
+
+---
 
 ## 🛠️ Stack Tecnológico
 
-### � Frontend
+### 🌐 Frontend
 - **Framework**: React 18 con TypeScript
-- **Estilos**: Tailwind CSS
+- **Estilos**: Tailwind CSS, Bootstrap
 - **Build Tool**: Vite
 - **Estado**: React Hooks + Context API
 - **HTTP**: Fetch API nativo
@@ -52,14 +45,63 @@ Facilitar la conexión entre productores agrícolas y consumidores finales media
 ### 👥 Backend - Servicio de Usuarios
 - **Lenguaje**: Python 3.8+
 - **Framework**: Flask
-- **Almacenamiento**: Pandas DataFrame (en memoria)
+- **Base de Datos**: MongoDB (NoSQL)
 - **Arquitectura**: Clean Architecture
 - **Documentación**: Swagger/OpenAPI
 - **Autenticación**: Básica con validación de credenciales
 
+### 🛒 Backend - Servicio de Carrito
+- **Lenguaje**: Python 3.8+
+- **Framework**: Flask
+- **Base de Datos**: PostgreSQL
+- **Arquitectura**: Clean Architecture
+- **Documentación**: Swagger/OpenAPI
+
+### 📊 Backend - Servicio de Estadísticas
+- **Lenguaje**: Python 3.8+
+- **Framework**: Flask
+- **Documentación**: Swagger/OpenAPI
+
 ### 🗄️ Bases de Datos
 - **Productos**: Cassandra - NoSQL distribuida para alta escalabilidad
-- **Usuarios**: Pandas DataFrame - Solución en memoria para prototipado rápido
+- **Usuarios**: MongoDB - NoSQL
+- **Carrito**: PostgreSQL
+
+---
+
+## 🚀 Microservicios y Tecnologías
+
+| Servicio                | Lenguaje   | Framework | Base de Datos | Observabilidad | Documentación |
+|-------------------------|------------|-----------|---------------|---------------|---------------|
+| FrontEnd                | TypeScript | React     | -             | -             | README        |
+| Serv_GestionProductos   | Python 3.11| Flask     | Cassandra     | Prometheus    | Swagger       |
+| Serv_Usuarios           | Python 3.8+| Flask     | MongoDB       | Prometheus    | Swagger       |
+| Serv_GestionCarrito     | Python 3.8+| Flask     | PostgreSQL    | Prometheus    | Swagger       |
+| Serv_GestionEstadisticas| Python 3.8+| Flask     | -             | Prometheus    | Swagger       |
+
+---
+
+## 📦 Principales Carpetas de Código
+
+### FrontEnd/src/components/
+- `catalog.tsx`, `product-card.tsx`, `loginservice.tsx`, `registrationservice.tsx`, `RegistrationProducts.tsx`, `navbar.tsx`, `cart/`, `dashboard/`
+
+### Serv_GestionProductos/
+- `app.py`, `application/useCases/`, `domain/entidades/product_model.py`, `Infrastructure/adapterProductRepo.py`, `flask_interface/routes.py`, `static/catalog/`, `swagger/swagger.yaml`
+
+### Serv_Usuarios/
+- `app.py`, `application/useCases/`, `domain/entidades/user_model.py`, `Infrastructure/adapterUserRepo.py`, `flask_interface/routes.py`, `swagger/swagger.yaml`
+
+### Serv_GestionCarrito/
+- `app.py`, `Application/UseCases/`, `Domain/Carrito.py`, `Infraestructure/Routes.py`
+
+### Serv_GestionEstadisticas/
+- `app.py`, `application/`, `flask_interface/`, `swagger/`
+
+### IntegrationTests/
+- `config/`, `tests/`, `utils/`, `reporting/`, `reports/`
+
+---
 
 ## ✨ Características Principales
 
@@ -87,21 +129,7 @@ Facilitar la conexión entre productores agrícolas y consumidores finales media
 - ✅ **Estado de Carga**: Indicadores de loading y errores
 - ✅ **Formularios**: Registro y login de usuarios
 
-## 🔒 Seguridad y Configuración
-
-### 🛡️ Medidas de Seguridad
-- **Variables de Entorno**: Configuración sensible externalizada
-- **CORS Configurado**: Solo permite frontend autorizado
-- **Debug Mode**: Deshabilitado para producción
-- **Host Binding**: Restringido a localhost
-- **Validación de Entrada**: En todos los endpoints
-- **Manejo de Errores**: Respuestas consistentes y seguras
-
-### ⚙️ Configuración de Entorno
-- **Desarrollo**: Configuración optimizada para desarrollo local
-- **Producción**: Variables de entorno para deployment
-- **Docker**: Contenedores para dependencias externas
-- **Logging**: Configuración de logs por nivel
+---
 
 ## 📊 Datos y Esquemas
 
@@ -146,6 +174,26 @@ Facilitar la conexión entre productores agrícolas y consumidores finales media
   "hashPassword": "contraseña"
 }
 ```
+
+---
+
+## 🔒 Seguridad y Configuración
+
+### 🛡️ Medidas de Seguridad
+- **Variables de Entorno**: Configuración sensible externalizada
+- **CORS Configurado**: Solo permite frontend autorizado
+- **Debug Mode**: Deshabilitado para producción
+- **Host Binding**: Restringido a localhost
+- **Validación de Entrada**: En todos los endpoints
+- **Manejo de Errores**: Respuestas consistentes y seguras
+
+### ⚙️ Configuración de Entorno
+- **Desarrollo**: Configuración optimizada para desarrollo local
+- **Producción**: Variables de entorno para deployment
+- **Docker**: Contenedores para dependencias externas
+- **Logging**: Configuración de logs por nivel
+
+---
 
 ## 🚀 Guía de Instalación y Ejecución
 
@@ -203,6 +251,8 @@ cd FrontEnd && npm run dev
 - **Swagger Productos**: http://localhost:5000/swagger
 - **Swagger Usuarios**: http://localhost:5001/swagger
 
+---
+
 ## 🧪 Testing y Desarrollo
 
 ### 🔬 Pruebas de API
@@ -220,6 +270,8 @@ El proyecto incluye scripts de prueba automatizados:
 - **Código Modular**: Fácil mantenimiento y extensión
 - **Variables de Entorno**: Configuración flexible
 - **Logging**: Trazabilidad de operaciones
+
+---
 
 ## 📈 Escalabilidad y Futuro
 
@@ -239,12 +291,21 @@ El proyecto incluye scripts de prueba automatizados:
 - **API REST**: Interfaces estándar
 - **Frontend Desacoplado**: SPA independiente
 
-## 👥 Equipo de Desarrollo
+---
 
-Proyecto desarrollado como trabajo de Ingeniería de Software 2, implementando buenas prácticas de desarrollo, arquitectura limpia y tecnologías modernas.
+## � Documentación y Recursos
+
+- Cada microservicio y el frontend tienen su propio `README.md` detallado.
+- Documentación Swagger disponible en `/swagger` de cada servicio backend.
+- Pruebas de integración y reportes en `IntegrationTests/`.
+- Scripts de despliegue y gestión en `WorkspaceSetup/`.
+
+---
+
+## 👥 Equipo y Créditos
+
+Desarrollado por el equipo AgroWeb-Capibaras para Ingeniería de Software 2 (2025-1), Universidad Nacional de Colombia.
 
 ---
 
 **🌱 AgroWeb - Conectando el campo con la tecnología** 🚀
-
-*Para instrucciones detalladas de instalación y ejecución, consultar el README.md principal en la carpeta Workspace_Config.*
